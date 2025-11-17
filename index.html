@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Michael Kruse – Remote Operations Portfolio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Portfolio of Michael Kruse – Remote Operations & Administrative Support, Reporting & Analytics Projects.">
+    <style>
+        :root {
+            --bg: #020617;
+            --bg-soft: #0b1120;
+            --sidebar-bg: #020617;
+            --sidebar-border: #111827;
+            --accent: #38bdf8;
+            --accent-soft: rgba(56, 189, 248, 0.16);
+            --text-main: #e5e7eb;
+            --text-muted: #9ca3af;
+            --radius-lg: 14px;
+            --radius-pill: 999px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: radial-gradient(circle at top, #020617, #000 70%);
+            color: var(--text-main);
+            display: flex;
+            min-height: 100vh;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: none;
+        }
+
+        .layout {
+            display: flex;
+            width: 100%;
+        }
+
+        /* Sidebar */
+
+        .sidebar {
+            width: 260px;
+            background: linear-gradient(180deg, #020617, #020617 60%, #020617);
+            border-right: 1px solid var(--sidebar-border);
+            padding: 20px 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            position: sticky;
+            top: 0;
+            align-self: flex-start;
+            min-height: 100vh;
+        }
+
+        .brand {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .brand-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        .brand-subtitle {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px 4px 4px;
+            border-radius: var(--radius-pill);
+            border: 1px solid rgba(56, 189, 248, 0.7);
+            background: radial-gradient(circle at 0 0, rgba(56, 189, 248, 0.35), transparent 50%);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--accent);
+        }
+
+        .badge-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+            background: radial-gradient(circle at 30% 0, #e0f2fe, #38bdf8);
+            box-shadow: 0 0 10px rgba(56, 189, 248, 0.9);
+        }
+
+        .sidebar-section-title {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+        }
+
+        .nav-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .nav-item {
+            margin: 0;
+        }
+
+        .nav-link {
+            width: 100%;
+            text-align: left;
+            border: none;
+            background: transparent;
+            color: var(--text-main);
+            font: inherit;
+            padding: 8px 10px;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            cursor: pointer;
+            transition: background 0.15s ease, color 0.15s ease, transform 0.08s ease;
+        }
+
+        .nav-link-main {
+            font-size: 0.86rem;
+        }
+
+        .nav-link-sub {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+        }
+
+        .nav-link:hover {
+            background: rgba(15, 23, 42, 0.8);
+            transform: translateX(1px);
+        }
+
+        .nav-link.active {
+            background: linear-gradient(90deg, rgba(56, 189, 248, 0.12), rgba(56, 189, 248, 0.02));
+            border: 1px solid rgba(56, 189, 248, 0.6);
+            box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.9);
+        }
+
+        .sidebar-footer {
+            margin-top: auto;
+            font-size: 0.72rem;
+            color: var(--text-muted);
+        }
+
+        .sidebar-footer a {
+            color: var(--accent);
+        }
+
+        /* Main content */
+
+        .main {
+            flex: 1;
+            min-width: 0;
+            padding: 16px 16px 16px 0;
+        }
+
+        .main-inner {
+            border-radius: 20px;
+            border: 1px solid rgba(15, 23, 42, 0.9);
+            background: radial-gradient(circle at top left, #020617, #020617 40%, #020617 100%);
+            box-shadow: 0 28px 70px rgba(0, 0, 0, 0.75);
+            padding: 12px;
+            height: calc(100vh - 32px);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .main-header {
+            padding: 8px 10px 8px;
+            border-bottom: 1px solid rgba(31, 41, 55, 0.8);
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        .main-header-title {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .main-header-title strong {
+            color: var(--text-main);
+        }
+
+        .tag-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            font-size: 0.72rem;
+        }
+
+        .tag-pill {
+            padding: 3px 9px;
+            border-radius: var(--radius-pill);
+            border: 1px solid rgba(148, 163, 184, 0.55);
+            color: var(--text-muted);
+            background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.92), rgba(15, 23, 42, 0.98));
+        }
+
+        .content-shell {
+            position: relative;
+            flex: 1;
+            min-height: 0;
+            margin-top: 6px;
+            border-radius: 14px;
+            overflow: hidden;
+        }
+
+        .content-frame {
+            position: absolute;
+            inset: 0;
+            border: none;
+            width: 100%;
+            height: 100%;
+            display: none;
+            background: #000;
+        }
+
+        .content-frame.active {
+            display: block;
+        }
+
+        .loading-note {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            pointer-events: none;
+        }
+
+        /* Responsive */
+
+        @media (max-width: 900px) {
+            body {
+                display: block;
+            }
+
+            .layout {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                position: static;
+                min-height: auto;
+                border-right: none;
+                border-bottom: 1px solid var(--sidebar-border);
+                border-radius: 0 0 18px 18px;
+            }
+
+            .main {
+                padding: 12px;
+            }
+
+            .main-inner {
+                height: auto;
+                min-height: 70vh;
+            }
+
+            .content-shell {
+                height: 70vh;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .sidebar {
+                padding: 16px 14px;
+            }
+
+            .nav-link {
+                padding: 7px 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="layout">
+    <!-- Sidebar / TOC -->
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="badge">
+                <span class="badge-dot"></span>
+                <span>Remote Operations Portfolio</span>
+            </div>
+            <div class="brand-title">Michael Kruse</div>
+            <div class="brand-subtitle">
+                Remote Operations &amp; Administrative Support · Documentation &amp; Workflow Specialist
+            </div>
+        </div>
+
+        <div>
+            <div class="sidebar-section-title">Overview</div>
+            <ul class="nav-list">
+                <li class="nav-item">
+                    <button class="nav-link active" data-target="frame-resume">
+                        <span class="nav-link-main">Resume</span>
+                        <span class="nav-link-sub">Profile, skills &amp; experience</span>
+                    </button>
+                </li>
+            </ul>
+        </div>
+
+        <div>
+            <div class="sidebar-section-title">Project Portfolio</div>
+            <ul class="nav-list">
+                <li class="nav-item">
+                    <button class="nav-link" data-target="frame-ops-dashboard">
+                        <span class="nav-link-main">Project 1 – Operations Dashboard</span>
+                        <span class="nav-link-sub">Job costing, throughput, on-time delivery</span>
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" data-target="frame-call-center-kpi">
+                        <span class="nav-link-main">Project 2 – Call Center KPI Analysis</span>
+                        <span class="nav-link-sub">Wait time, resolution, CSAT &amp; volume</span>
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" data-target="frame-large-dataset">
+                        <span class="nav-link-main">Project 3 – Large Dataset &amp; Pivot Tables</span>
+                        <span class="nav-link-sub">10k+ row dataset, Power Query, pivots</span>
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" data-target="frame-comm-report">
+                        <span class="nav-link-main">Project 4 – Communication-Focused Report</span>
+                        <span class="nav-link-sub">Plain-English reporting for stakeholders</span>
+                    </button>
+                </li>
+            </ul>
+        </div>
+
+        <div class="sidebar-footer">
+            This page is served from a single <code>index.html</code> and loads each project
+            from its own HTML file. Keep all files in the same GitHub repo folder.
+        </div>
+    </aside>
+
+    <!-- Main content -->
+    <main class="main">
+        <div class="main-inner">
+            <div class="main-header">
+                <div class="main-header-title">
+                    Currently viewing: <strong id="current-view-label">Resume</strong>
+                </div>
+                <div class="tag-row">
+                    <span class="tag-pill">Remote-friendly</span>
+                    <span class="tag-pill">Operations &amp; Support</span>
+                    <span class="tag-pill">Data &amp; Reporting</span>
+                </div>
+            </div>
+
+            <div class="content-shell">
+                <div class="loading-note" id="loading-note">
+                    Loading section…
+                </div>
+
+                <!-- Each iframe points to one of your existing HTML files -->
+                <iframe
+                    id="frame-resume"
+                    class="content-frame active"
+                    src="resume.html"
+                    title="Resume – Michael Kruse"
+                ></iframe>
+
+                <iframe
+                    id="frame-ops-dashboard"
+                    class="content-frame"
+                    src="operations_dashboard.html"
+                    title="Project 1 – Operations Dashboard"
+                ></iframe>
+
+                <iframe
+                    id="frame-call-center-kpi"
+                    class="content-frame"
+                    src="call_center_customer_support_kpi.html"
+                    title="Project 2 – Call Center &amp; Customer Support KPI Analysis"
+                ></iframe>
+
+                <iframe
+                    id="frame-large-dataset"
+                    class="content-frame"
+                    src="large_dataset_pivot_table.html"
+                    title="Project 3 – Large Dataset &amp; Pivot Table Deep Dive"
+                ></iframe>
+
+                <iframe
+                    id="frame-comm-report"
+                    class="content-frame"
+                    src="communication_focused_report.html"
+                    title="Project 4 – Communication-Focused Report"
+                ></iframe>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script>
+    (function () {
+        const navLinks = Array.from(document.querySelectorAll(".nav-link"));
+        const frames = Array.from(document.querySelectorAll(".content-frame"));
+        const label = document.getElementById("current-view-label");
+        const loadingNote = document.getElementById("loading-note");
+
+        function setActive(targetId, labelText) {
+            // Update nav active state
+            navLinks.forEach(btn => {
+                btn.classList.toggle("active", btn.dataset.target === targetId);
+            });
+
+            // Show loading text briefly
+            if (loadingNote) {
+                loadingNote.style.opacity = "1";
+            }
+
+            // Show the selected frame
+            frames.forEach(frame => {
+                const isTarget = frame.id === targetId;
+                frame.classList.toggle("active", isTarget);
+            });
+
+            // Update label
+            if (label && labelText) {
+                label.textContent = labelText;
+            }
+
+            // Hide loading text after a short delay
+            if (loadingNote) {
+                setTimeout(() => {
+                    loadingNote.style.opacity = "0";
+                }, 400);
+            }
+        }
+
+        navLinks.forEach(btn => {
+            btn.addEventListener("click", () => {
+                const targetId = btn.dataset.target;
+                const mainText = btn.querySelector(".nav-link-main")?.textContent?.trim() || "";
+                setActive(targetId, mainText);
+            });
+        });
+    })();
+</script>
+</body>
+</html>

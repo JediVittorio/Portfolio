@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Project 4 – Communication‑Focused Report</title>
+    <style>
+        :root {
+            --bg: #050816;
+            --card: #020617;
+            --accent: #a855f7;
+            --accent-soft: rgba(168, 85, 247, 0.18);
+            --text-main: #e5e7eb;
+            --text-muted: #9ca3af;
+            --border-subtle: #1f2937;
+            --shadow-soft: 0 24px 60px rgba(15, 23, 42, 0.9);
+            --radius-lg: 18px;
+            --radius-pill: 999px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+                sans-serif;
+            background: radial-gradient(circle at top, #0b1120, #020617 55%, #000 100%);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            padding: 32px 16px;
+        }
+
+        .page {
+            width: 100%;
+            max-width: 1100px;
+            background: radial-gradient(circle at top left, #020617, #020617 40%, #020617 100%);
+            border-radius: 28px;
+            border: 1px solid rgba(148, 163, 184, 0.22);
+            box-shadow: var(--shadow-soft);
+            padding: 28px 24px 32px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @media (min-width: 900px) {
+            .page {
+                padding: 32px 40px 40px;
+            }
+        }
+
+        .page::before {
+            content: "";
+            position: absolute;
+            inset: -40%;
+            background:
+                radial-gradient(circle at 10% 0, rgba(168, 85, 247, 0.22), transparent 55%),
+                radial-gradient(circle at 90% 0, rgba(59, 130, 246, 0.12), transparent 55%);
+            opacity: 0.9;
+            pointer-events: none;
+        }
+
+        .page-inner {
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 28px;
+        }
+
+        @media (min-width: 720px) {
+            header {
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+            }
+        }
+
+        .title-block h1 {
+            font-size: clamp(1.6rem, 2.2vw + 1.1rem, 2.4rem);
+            margin: 0 0 4px;
+            letter-spacing: 0.03em;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            gap: 8px;
+        }
+
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px 4px 4px;
+            border-radius: var(--radius-pill);
+            background: linear-gradient(90deg, rgba(15, 23, 42, 0.95), rgba(46, 16, 101, 0.9));
+            border: 1px solid rgba(168, 85, 247, 0.7);
+            color: var(--accent);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+        }
+
+        .pill-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+            background: radial-gradient(circle at 30% 0, #f5f3ff, #a855f7);
+            box-shadow: 0 0 10px rgba(168, 85, 247, 0.9);
+        }
+
+        .subtitle {
+            margin: 0;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            max-width: 520px;
+        }
+
+        .meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .meta span {
+            padding: 4px 10px;
+            border-radius: var(--radius-pill);
+            border: 1px solid rgba(148, 163, 184, 0.45);
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.25));
+        }
+
+        main {
+            display: grid;
+            grid-template-columns: minmax(0, 2fr);
+            gap: 18px;
+        }
+
+        @media (min-width: 900px) {
+            main {
+                grid-template-columns: minmax(0, 1.25fr) minmax(0, 1.1fr);
+                gap: 22px;
+                align-items: flex-start;
+            }
+        }
+
+        section {
+            background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.98));
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(76, 29, 149, 0.85);
+            box-shadow: 0 18px 45px rgba(15, 23, 42, 0.8);
+            padding: 18px 18px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        section::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(135deg, rgba(168, 85, 247, 0.1), transparent 40%),
+                linear-gradient(-135deg, rgba(59, 130, 246, 0.08), transparent 40%);
+            opacity: 1;
+            pointer-events: none;
+        }
+
+        section > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        section h2 {
+            margin: 0 0 10px;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-tag {
+            width: 22px;
+            height: 1px;
+            background: linear-gradient(90deg, rgba(168, 85, 247, 0.9), transparent);
+        }
+
+        section h3 {
+            margin: 0 0 6px;
+            font-size: 1.05rem;
+        }
+
+        section p {
+            margin: 0 0 8px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        ul {
+            margin: 6px 0 0;
+            padding-left: 18px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        li + li {
+            margin-top: 3px;
+        }
+
+        .chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 8px;
+        }
+
+        .chip {
+            padding: 4px 10px;
+            border-radius: var(--radius-pill);
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(148, 163, 184, 0.5);
+            font-size: 0.75rem;
+            color: var(--text-main);
+        }
+
+        .report-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 10px;
+            padding: 8px 14px;
+            border-radius: var(--radius-pill);
+            border: 1px solid rgba(168, 85, 247, 0.7);
+            background: radial-gradient(circle at top left, rgba(46, 16, 101, 0.95), rgba(15, 23, 42, 0.98));
+            color: #f5f3ff;
+            font-size: 0.85rem;
+            text-decoration: none;
+        }
+
+        .report-link span:first-child {
+            width: 7px;
+            height: 7px;
+            border-radius: 999px;
+            background: #a855f7;
+            box-shadow: 0 0 8px rgba(168, 85, 247, 0.8);
+        }
+
+        .report-link:hover {
+            border-color: #c4b5fd;
+        }
+
+        .report-card {
+            border-radius: 16px;
+            border: 1px solid rgba(148, 163, 184, 0.6);
+            background: radial-gradient(circle at top left, #020617, #020617 55%);
+            padding: 12px 13px 13px;
+            margin-top: 4px;
+        }
+
+        .report-card h4 {
+            margin: 0 0 4px;
+            font-size: 0.9rem;
+            color: #e5e7eb;
+        }
+
+        .report-section {
+            margin-top: 10px;
+        }
+
+        .report-section h5 {
+            margin: 0 0 3px;
+            font-size: 0.88rem;
+            color: #e5e7eb;
+        }
+
+        .report-section p {
+            margin: 0 0 4px;
+        }
+
+        .report-section ul {
+            margin-top: 2px;
+        }
+
+        .figure-placeholder {
+            margin: 6px 0;
+            padding: 8px 9px;
+            border-radius: 10px;
+            border: 1px dashed rgba(148, 163, 184, 0.6);
+            background: rgba(15, 23, 42, 0.9);
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .footer-note {
+            margin-top: 16px;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <div class="page-inner">
+            <header>
+                <div class="title-block">
+                    <div class="pill">
+                        <span class="pill-dot"></span>
+                        <span>Project 4</span>
+                    </div>
+                    <h1>
+                        Communication‑Focused Report
+                        <span style="font-weight:400; color:#9ca3af;">(Call Center KPI Analysis)</span>
+                    </h1>
+                    <p class="subtitle">
+                        Turned the Call Center KPI Analysis into a formal management report designed
+                        for both technical and non‑technical stakeholders, with clear language,
+                        charts, and concrete recommendations.
+                    </p>
+                </div>
+                <div class="meta">
+                    <span>Focus: Written Communication &amp; Reporting</span>
+                    <span>Audience: Operations &amp; Customer Experience Leaders</span>
+                    <span>Format: 2–3 Page PDF + HTML</span>
+                </div>
+            </header>
+
+            <main>
+                <section>
+                    <h2>
+                        <span class="section-tag"></span>
+                        Report Summary
+                    </h2>
+                    <h3>Overview</h3>
+                    <p>
+                        This project packages the <strong>Call Center &amp; Customer Support KPI Analysis</strong>
+                        (Project 2) into a business‑ready report. It focuses on trends in call volume,
+                        handle time, wait time, resolution rates, and CSAT, and translates the findings
+                        into actions an operations manager can take.
+                    </p>
+                    <ul>
+                        <li>Plain‑English explanation of the call center’s current performance.</li>
+                        <li>Annotated screenshots of the most important charts.</li>
+                        <li>Concrete recommendations framed as “If I were the ops manager, I would…”.</li>
+                    </ul>
+                    <div class="chips">
+                        <div class="chip">Formal Reporting</div>
+                        <div class="chip">Technical ↔ Non‑Technical Bridge</div>
+                        <div class="chip">Storytelling with Data</div>
+                    </div>
+
+                    <a class="report-link" href="Call Center KPI Analysis - Management Report.pdf" target="_blank" rel="noopener">
+                        <span></span>
+                        <span>Download the full report (PDF)</span>
+                    </a>
+
+                    <div class="footer-note">
+                        Save your exported PDF as <strong>“Call Center KPI Analysis - Management Report.pdf”</strong>
+                        in this folder to activate the link above.
+                    </div>
+                </section>
+
+                <section>
+                    <h2>
+                        <span class="section-tag"></span>
+                        Report Structure
+                    </h2>
+                    <div class="report-card">
+                        <h4>HTML Version of the Report</h4>
+
+                        <div class="report-section">
+                            <h5>1. Problem Statement (Plain English)</h5>
+                            <p>
+                                Over the last several months, the customer support center has experienced
+                                <strong>inconsistent wait times, higher call volumes in certain queues, and mixed customer feedback</strong>.
+                                Leadership wants to understand:
+                            </p>
+                            <ul>
+                                <li>When and where call demand is highest.</li>
+                                <li>Which queues and call reasons are driving longer handle times and wait times.</li>
+                                <li>How resolution rates and CSAT scores are trending over time.</li>
+                            </ul>
+                            <p>
+                                The goal of this analysis is to provide a clear picture of current performance
+                                and outline practical steps to improve efficiency and customer experience.
+                            </p>
+                        </div>
+
+                        <div class="report-section">
+                            <h5>2. Data &amp; Approach</h5>
+                            <p>
+                                The report is based on a synthetic call‑level dataset (see Project 2) with
+                                columns such as Call_ID, Date, Customer_State, Queue, Agent_ID, Call_Reason,
+                                Handle_Time, Wait_Time, Resolution, and CSAT_Score.
+                            </p>
+                            <ul>
+                                <li>Data prepared in Excel/SQLite and summarized using SQL.</li>
+                                <li>KPIs calculated by day, week, month, and by queue / call reason.</li>
+                                <li>Dashboard built in Power BI to visualize trends and anomalies.</li>
+                            </ul>
+                            <p>
+                                This report highlights key charts from that dashboard and describes what they
+                                mean in everyday language.
+                            </p>
+                        </div>
+
+                        <div class="report-section">
+                            <h5>3. Key Charts (Screenshots)</h5>
+                            <div class="figure-placeholder">
+                                Figure 1 – Total Calls by Day (column chart showing volume spikes and quieter periods).
+                            </div>
+                            <div class="figure-placeholder">
+                                Figure 2 – Average Handle Time by Queue (bar chart comparing queues A, B, C, etc.).
+                            </div>
+                            <div class="figure-placeholder">
+                                Figure 3 – Resolution Rate and CSAT Trend (line charts over time).
+                            </div>
+                            <p>
+                                In the PDF version, these placeholders are replaced with actual screenshot images
+                                exported from the dashboard and inserted with captions describing what to look for.
+                            </p>
+                        </div>
+
+                        <div class="report-section">
+                            <h5>4. Findings (Trends, Patterns, Anomalies)</h5>
+                            <ul>
+                                <li>
+                                    <strong>Queue B’s calls are noticeably more complex.</strong>
+                                    Its average handle time is roughly 35% higher than other queues,
+                                    even after controlling for call volume.
+                                </li>
+                                <li>
+                                    <strong>Call volume spikes around billing cycle dates.</strong>
+                                    On those days, both total calls and wait times increase, particularly
+                                    for customers in certain states.
+                                </li>
+                                <li>
+                                    <strong>High wait‑time days align with specific events.</strong>
+                                    Outages and marketing campaigns correlate with days where average
+                                    wait time is significantly above normal.
+                                </li>
+                                <li>
+                                    <strong>Better resolution rates track with higher CSAT.</strong>
+                                    Queues that solve more issues on the first contact also show stronger
+                                    satisfaction scores.
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="report-section">
+                            <h5>5. Recommendations (If I were the ops manager, I would…)</h5>
+                            <ul>
+                                <li>
+                                    <strong>Target Queue B for process review and training.</strong>
+                                    Shadow agents, map the most common call reasons, and create focused
+                                    scripts or knowledge‑base content to reduce handle time without
+                                    rushing customers.
+                                </li>
+                                <li>
+                                    <strong>Stabilize billing‑related call spikes.</strong>
+                                    Coordinate with Billing and Communications to send clearer reminders
+                                    and FAQs ahead of billing dates, especially to states that show the
+                                    biggest surges.
+                                </li>
+                                <li>
+                                    <strong>Plan staffing around predictable high‑volume windows.</strong>
+                                    Use the daily call trend chart to schedule extra coverage on known
+                                    peak days, and reduce coverage where demand is consistently low.
+                                </li>
+                                <li>
+                                    <strong>Use resolution rate + CSAT as core quality metrics.</strong>
+                                    Build these into agent scorecards and coaching, rewarding behaviors
+                                    that close issues on the first contact while maintaining high CSAT.
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="report-section">
+                            <h5>6. Next Steps &amp; Communication Plan</h5>
+                            <p>
+                                The final section of the PDF outlines how these findings will be shared
+                                across teams:
+                            </p>
+                            <ul>
+                                <li>Short slide‑style summary for leadership with top 3 metrics.</li>
+                                <li>Targeted follow‑up with queue supervisors to review queue‑level charts.</li>
+                                <li>Regular monthly refresh of the dashboard and report to track progress.</li>
+                            </ul>
+                            <p>
+                                This ensures the analysis doesn’t live only in a dashboard, but becomes part
+                                of an ongoing conversation between operations, training, IT, and marketing.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>
+                        <span class="section-tag"></span>
+                        What This Project Proves
+                    </h2>
+                    <ul>
+                        <li>
+                            Ability to package analysis from SQL and dashboards into a <strong>clear, structured report</strong>.
+                        </li>
+                        <li>
+                            Comfortable writing for both technical teams and <strong>non‑technical business stakeholders</strong>.
+                        </li>
+                        <li>
+                            Focus on <strong>actions and recommendations</strong>, not just charts and numbers.
+                        </li>
+                        <li>
+                            Experience acting as a bridge between data work and day‑to‑day operations.
+                        </li>
+                    </ul>
+
+                    <div class="footer-note">
+                        To finalize this project, export the written content here into Google Docs
+                        or Word, insert screenshots from your call center dashboard, and save it as
+                        the PDF linked above.
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+</body>
+</html>
+
