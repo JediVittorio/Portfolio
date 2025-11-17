@@ -1,331 +1,562 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Michael Kruse | Data & Analytics Portfolio Index</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Index of data and analytics portfolio projects for Michael Kruse, including operations analytics, call center KPIs, large dataset pivot analysis, and communication-focused reporting.">
+    <meta charset="UTF-8" />
+    <title>Michael Kruse | Portfolio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Portfolio for Michael Kruse – Remote Operations & Administrative Support, Documentation & Workflow Specialist." />
     <style>
+        :root {
+            --bg: #020617;
+            --bg-soft: #050816;
+            --card: #020617;
+            --accent: #38bdf8;
+            --accent-soft: rgba(56, 189, 248, 0.18);
+            --accent-strong: #facc15;
+            --text-main: #e5e7eb;
+            --text-muted: #9ca3af;
+            --border-subtle: #1f2937;
+            --shadow-soft: 0 24px 60px rgba(15, 23, 42, 0.9);
+            --radius-lg: 18px;
+            --radius-pill: 999px;
+        }
+
         * {
             box-sizing: border-box;
         }
 
         body {
             margin: 0;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-            line-height: 1.6;
-            background: #f4f5f7;
-            color: #111827;
+            min-height: 100vh;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+                sans-serif;
+            background:
+                radial-gradient(circle at top, #0b1120, #020617 55%, #000 100%);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            padding: 32px 16px;
         }
 
-        a {
-            color: #1d4ed8;
-            text-decoration: none;
+        .page {
+            width: 100%;
+            max-width: 1100px;
+            background:
+                radial-gradient(circle at top left, #020617, #020617 40%, #020617 100%);
+            border-radius: 28px;
+            border: 1px solid rgba(148, 163, 184, 0.25);
+            box-shadow: var(--shadow-soft);
+            padding: 28px 24px 32px;
+            position: relative;
+            overflow: hidden;
         }
 
-        a:hover {
-            text-decoration: underline;
+        @media (min-width: 900px) {
+            .page {
+                padding: 32px 40px 40px;
+            }
+        }
+
+        .page::before {
+            content: "";
+            position: absolute;
+            inset: -40%;
+            background:
+                radial-gradient(circle at 8% 0, rgba(56, 189, 248, 0.2), transparent 55%),
+                radial-gradient(circle at 92% 0, rgba(250, 204, 21, 0.18), transparent 55%);
+            opacity: 0.9;
+            pointer-events: none;
+        }
+
+        .page-inner {
+            position: relative;
+            z-index: 1;
         }
 
         header {
-            background: #0f172a;
-            color: #f9fafb;
-            padding: 2.5rem 1.5rem 2rem 1.5rem;
-        }
-
-        .container {
-            max-width: 980px;
-            margin: 0 auto;
-            padding: 0 1.5rem 3rem 1.5rem;
-        }
-
-        .top-header {
             display: flex;
-            flex-wrap: wrap;
-            align-items: flex-start;
-            justify-content: space-between;
-            gap: 1rem;
+            flex-direction: column;
+            gap: 20px;
+            margin-bottom: 28px;
         }
 
-        .name-block h1 {
-            margin: 0;
-            font-size: 2.1rem;
-            letter-spacing: 0.04em;
-            text-transform: uppercase;
+        @media (min-width: 780px) {
+            header {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
         }
 
-        .name-block h2 {
-            margin: 0.4rem 0 0;
-            font-size: 1rem;
-            font-weight: 500;
+        .identity {
+            max-width: 620px;
+        }
+
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px 4px 4px;
+            border-radius: var(--radius-pill);
+            background: linear-gradient(90deg, rgba(15, 23, 42, 0.95), rgba(8, 47, 73, 0.9));
+            border: 1px solid rgba(56, 189, 248, 0.7);
+            font-size: 0.78rem;
             letter-spacing: 0.16em;
             text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 10px;
+        }
+
+        .pill-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+            background: radial-gradient(circle at 30% 0, #e0f2fe, #38bdf8);
+            box-shadow: 0 0 10px rgba(56, 189, 248, 0.9);
+        }
+
+        .identity h1 {
+            margin: 0;
+            font-size: clamp(1.9rem, 2.4vw + 1.2rem, 2.6rem);
+            letter-spacing: 0.04em;
+        }
+
+        .identity h2 {
+            margin: 6px 0 0;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.22em;
             color: #cbd5f5;
         }
 
-        .contact-block {
-            font-size: 0.9rem;
-            text-align: right;
+        .tagline {
+            margin-top: 14px;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            max-width: 620px;
         }
 
-        .tagline {
-            margin-top: 1.5rem;
-            font-size: 0.98rem;
-            max-width: 750px;
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 16px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border-radius: var(--radius-pill);
+            font-size: 0.86rem;
+            text-decoration: none;
+            border: 1px solid rgba(148, 163, 184, 0.7);
+            background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.96), rgba(15, 23, 42, 0.92));
+            color: var(--text-main);
+        }
+
+        .btn-primary {
+            border-color: rgba(56, 189, 248, 0.85);
+            background: linear-gradient(135deg, #0ea5e9, #22c55e);
+            color: #0b1120;
+            font-weight: 600;
+        }
+
+        .btn span.dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 999px;
+            background: var(--accent-strong);
+            box-shadow: 0 0 10px rgba(250, 204, 21, 0.9);
+        }
+
+        .contact-meta {
+            font-size: 0.84rem;
+            color: var(--text-muted);
+            text-align: left;
+        }
+
+        @media (min-width: 780px) {
+            .contact-meta {
+                text-align: right;
+            }
+        }
+
+        .contact-meta a {
             color: #e5e7eb;
+            text-decoration: none;
+        }
+
+        .contact-meta a:hover {
+            text-decoration: underline;
         }
 
         main {
-            margin-top: -1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
         }
 
-        .card {
-            background: #ffffff;
-            border-radius: 10px;
-            padding: 1.75rem 1.5rem;
-            box-shadow: 0 10px 25px rgba(15, 23, 42, 0.12);
-            margin-bottom: 1.5rem;
+        .section-heading {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 6px;
         }
 
-        .card h3 {
-            margin-top: 0;
-            font-size: 1.05rem;
-            letter-spacing: 0.12em;
+        .section-heading h3 {
+            margin: 0;
+            font-size: 0.95rem;
+            letter-spacing: 0.18em;
             text-transform: uppercase;
-            color: #6b7280;
+            color: var(--text-muted);
         }
 
-        .intro-text {
-            font-size: 0.98rem;
+        .section-divider {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, rgba(148, 163, 184, 0.7), transparent);
         }
 
-        .project-list {
+        .projects-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 1.25rem;
+            grid-template-columns: minmax(0, 1fr);
+            gap: 14px;
+        }
+
+        @media (min-width: 720px) {
+            .projects-grid {
+                grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.1fr);
+            }
         }
 
         .project-card {
-            border-radius: 10px;
-            border: 1px solid #e5e7eb;
-            padding: 1rem 1.1rem 1.1rem 1.1rem;
-            background: #ffffff;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+            position: relative;
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(148, 163, 184, 0.45);
+            background:
+                radial-gradient(circle at top left, rgba(15, 23, 42, 0.96), rgba(15, 23, 42, 0.98));
+            padding: 14px 14px 16px;
+            box-shadow: 0 16px 38px rgba(15, 23, 42, 0.85);
+            overflow: hidden;
+        }
+
+        .project-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 0 0, rgba(56, 189, 248, 0.06), transparent 55%),
+                radial-gradient(circle at 100% 0, rgba(250, 204, 21, 0.06), transparent 55%);
+            opacity: 1;
+            pointer-events: none;
+        }
+
+        .project-inner {
+            position: relative;
+            z-index: 1;
+        }
+
+        .project-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 3px 10px 3px 4px;
+            border-radius: var(--radius-pill);
+            background: rgba(15, 23, 42, 0.96);
+            border: 1px solid rgba(148, 163, 184, 0.6);
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+        }
+
+        .project-label-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 999px;
+            background: var(--accent);
+            box-shadow: 0 0 8px rgba(56, 189, 248, 0.9);
         }
 
         .project-title {
-            font-weight: 600;
-            margin-bottom: 0.25rem;
+            margin: 0;
+            font-size: 1rem;
+            color: #f9fafb;
         }
 
-        .project-meta {
-            font-size: 0.85rem;
-            color: #6b7280;
-            margin-bottom: 0.4rem;
+        .project-subtitle {
+            margin: 2px 0 0;
+            font-size: 0.84rem;
+            color: var(--text-muted);
         }
 
-        .project-desc {
-            font-size: 0.9rem;
-            margin-bottom: 0.75rem;
-        }
-
-        .project-link {
-            margin-top: auto;
-            font-size: 0.9rem;
-            font-weight: 500;
+        .project-body {
+            margin-top: 10px;
+            font-size: 0.88rem;
+            color: var(--text-muted);
         }
 
         .pill-row {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.3rem;
-            margin-bottom: 0.75rem;
+            gap: 6px;
+            margin-top: 8px;
         }
 
-        .pill {
-            padding: 0.18rem 0.55rem;
-            border-radius: 999px;
-            background: #eff6ff;
-            color: #1d4ed8;
+        .pill-small {
+            padding: 3px 9px;
+            border-radius: var(--radius-pill);
+            background: rgba(15, 23, 42, 0.96);
+            border: 1px solid rgba(148, 163, 184, 0.55);
             font-size: 0.72rem;
-            white-space: nowrap;
+        }
+
+        .project-footer {
+            margin-top: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            gap: 8px;
+        }
+
+        .project-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 11px;
+            border-radius: var(--radius-pill);
+            border: 1px solid rgba(56, 189, 248, 0.85);
+            background: radial-gradient(circle at top left, rgba(8, 47, 73, 0.96), rgba(15, 23, 42, 0.98));
+            color: #e0f2fe;
+            text-decoration: none;
+        }
+
+        .project-link span.icon {
+            font-size: 0.9rem;
+        }
+
+        .project-link:hover {
+            border-color: #e0f2fe;
+        }
+
+        .resume-note {
+            font-size: 0.8rem;
+            color: var(--text-muted);
         }
 
         footer {
-            text-align: center;
+            margin-top: 20px;
             font-size: 0.78rem;
-            color: #6b7280;
-            padding: 1.5rem 1rem 2rem 1rem;
-        }
-
-        @media (max-width: 600px) {
-            .contact-block {
-                text-align: left;
-            }
-
-            header {
-                padding: 2rem 1.25rem 1.5rem 1.25rem;
-            }
-
-            .card {
-                padding: 1.5rem 1.25rem;
-            }
+            color: var(--text-muted);
+            text-align: center;
         }
     </style>
 </head>
 <body>
-<header>
-    <div class="container">
-        <div class="top-header">
-            <div class="name-block">
+<div class="page">
+    <div class="page-inner">
+        <header>
+            <div class="identity">
+                <div class="pill">
+                    <span class="pill-dot"></span>
+                    <span>Remote Operations &amp; Admin Support</span>
+                </div>
                 <h1>Michael Kruse</h1>
-                <h2>Data &amp; Reporting · Operations · Customer Support Analytics</h2>
+                <h2>Documentation &amp; Workflow Specialist</h2>
+                <p class="tagline">
+                    Portfolio of hands-on projects that combine operations, documentation,
+                    and data analysis – from shop-floor style job tracking to call center KPIs
+                    and communication-focused reporting.
+                </p>
+                <div class="hero-actions">
+                    <a class="btn btn-primary" href="resume.html">
+                        <span class="dot"></span>
+                        <span>View Resume</span>
+                    </a>
+                    <a class="btn" href="mailto:kruser85@gmail.com">
+                        <span>Contact: kruser85@gmail.com</span>
+                    </a>
+                </div>
             </div>
-            <div class="contact-block">
-                <div>Litchfield, Illinois · Open to Remote Roles</div>
-                <div>Email: <a href="mailto:kruser85@gmail.com">kruser85@gmail.com</a></div>
-                <div>GitHub Pages Portfolio Index</div>
+            <div class="contact-meta">
+                <div>Litchfield, Illinois · Open to fully remote roles</div>
+                <div>Phone: <a href="tel:12173135901">+1 (217) 313-5901</a></div>
+                <div>LinkedIn:
+                    <a href="https://www.linkedin.com/in/michael-kruse-63ab67306" target="_blank" rel="noopener">
+                        /michael-kruse-63ab67306
+                    </a>
+                </div>
             </div>
-        </div>
-        <p class="tagline">
-            This index page links to my resume and four focused data &amp; analytics projects:
-            operations analytics, call center &amp; customer support KPIs, large dataset pivot analysis,
-            and a communication-focused report designed for non-technical stakeholders.
-        </p>
+        </header>
+
+        <main>
+            <section>
+                <div class="section-heading">
+                    <h3>Featured Projects</h3>
+                    <div class="section-divider"></div>
+                </div>
+                <div class="projects-grid">
+                    <!-- Project 1 -->
+                    <article class="project-card">
+                        <div class="project-inner">
+                            <div class="project-label">
+                                <span class="project-label-dot"></span>
+                                <span>Project 1 · Operations</span>
+                            </div>
+                            <h4 class="project-title">Operations Dashboard</h4>
+                            <p class="project-subtitle">(based on A-Ran Stainless)</p>
+                            <p class="project-body">
+                                End-to-end operations analytics project: modeled production jobs, built
+                                SQL-based performance metrics, and designed an executive-style dashboard
+                                for throughput, profitability, and on-time delivery.
+                            </p>
+                            <div class="pill-row">
+                                <span class="pill-small">Operations Analytics</span>
+                                <span class="pill-small">Excel / SQLite / Power BI</span>
+                                <span class="pill-small">Job Costing</span>
+                            </div>
+                            <div class="project-footer">
+                                <span>Shop-floor style dataset → exec view</span>
+                                <a class="project-link" href="operations-dashboard.html">
+                                    <span class="icon">↗</span>
+                                    <span>View project</span>
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Project 2 -->
+                    <article class="project-card">
+                        <div class="project-inner">
+                            <div class="project-label">
+                                <span class="project-label-dot"></span>
+                                <span>Project 2 · Support KPIs</span>
+                            </div>
+                            <h4 class="project-title">Call Center &amp; Customer Support KPI Analysis</h4>
+                            <p class="project-subtitle">(volume, wait time, resolution, CSAT)</p>
+                            <p class="project-body">
+                                Built a KPI view over a synthetic call center dataset to understand
+                                call volume patterns, handle and wait times, resolution rates, and
+                                customer satisfaction across queues and call reasons.
+                            </p>
+                            <div class="pill-row">
+                                <span class="pill-small">Call Center KPIs</span>
+                                <span class="pill-small">Excel / SQL-style analysis</span>
+                                <span class="pill-small">Operations Insights</span>
+                            </div>
+                            <div class="project-footer">
+                                <span>Data-first view of support health</span>
+                                <a class="project-link" href="call-center-customer-support-kpi.html">
+                                    <span class="icon">↗</span>
+                                    <span>View project</span>
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Project 3 -->
+                    <article class="project-card">
+                        <div class="project-inner">
+                            <div class="project-label">
+                                <span class="project-label-dot"></span>
+                                <span>Project 3 · Data Deep Dive</span>
+                            </div>
+                            <h4 class="project-title">Large Dataset + Pivot Table Deep Dive</h4>
+                            <p class="project-subtitle">(Excel / Power Query)</p>
+                            <p class="project-body">
+                                Worked with a 10k+ row sales dataset, used Power Query to clean and
+                                reshape the data, then built pivot tables and slicers to summarize
+                                performance by time, region, and product category.
+                            </p>
+                            <div class="pill-row">
+                                <span class="pill-small">Power Query</span>
+                                <span class="pill-small">Pivot Tables</span>
+                                <span class="pill-small">10k+ row dataset</span>
+                            </div>
+                            <div class="project-footer">
+                                <span>Raw CSV → business-ready pivots</span>
+                                <a class="project-link" href="large-dataset-pivot-table.html">
+                                    <span class="icon">↗</span>
+                                    <span>View project</span>
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Project 4 -->
+                    <article class="project-card">
+                        <div class="project-inner">
+                            <div class="project-label">
+                                <span class="project-label-dot"></span>
+                                <span>Project 4 · Communication</span>
+                            </div>
+                            <h4 class="project-title">Communication-Focused Report</h4>
+                            <p class="project-subtitle">(Call Center KPI Management Report)</p>
+                            <p class="project-body">
+                                Turned the KPI analysis into a formal management report for both
+                                technical and non-technical stakeholders, with plain-English findings,
+                                annotated charts, and concrete “If I were the ops manager…” actions.
+                            </p>
+                            <div class="pill-row">
+                                <span class="pill-small">Formal Reporting</span>
+                                <span class="pill-small">Storytelling with Data</span>
+                                <span class="pill-small">Ops &amp; CX Audience</span>
+                            </div>
+                            <div class="project-footer">
+                                <span>Analysis translated into decisions</span>
+                                <a class="project-link" href="communication-focused-report.html">
+                                    <span class="icon">↗</span>
+                                    <span>View project</span>
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <section>
+                <div class="section-heading">
+                    <h3>Resume</h3>
+                    <div class="section-divider"></div>
+                </div>
+                <div class="project-card">
+                    <div class="project-inner">
+                        <h4 class="project-title">Remote Operations &amp; Administrative Support Resume</h4>
+                        <p class="project-body">
+                            One-page HTML resume focused on remote operations, documentation, and
+                            workflow support – highlighting small-business ownership, coordination
+                            across stakeholders, and complex documentation management.
+                        </p>
+                        <div class="pill-row">
+                            <span class="pill-small">Remote Operations</span>
+                            <span class="pill-small">Documentation &amp; Reporting</span>
+                            <span class="pill-small">Workflow Specialist</span>
+                        </div>
+                        <div class="project-footer">
+                            <span class="resume-note">Opens as a standalone page in this repo.</span>
+                            <a class="project-link" href="resume.html">
+                                <span class="icon">↗</span>
+                                <span>Open resume</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            Built as a simple static site for GitHub Pages. Drop this file in your repository
+            as <strong>index.html</strong> alongside the project HTML files and it will serve as
+            your portfolio home page.
+        </footer>
     </div>
-</header>
-
-<main class="container">
-    <!-- Overview -->
-    <section class="card">
-        <h3>Portfolio Overview</h3>
-        <p class="intro-text">
-            The projects below are structured to demonstrate the skills requested in junior data and reporting roles:
-            SQL for filtering and aggregating data, use of spreadsheets and pivot tables on larger datasets, dashboard and
-            visualization work, and clear written communication of findings for business stakeholders.
-        </p>
-    </section>
-
-    <!-- Project Index -->
-    <section class="card">
-        <h3>Index of Portfolio Assets</h3>
-        <div class="project-list">
-            <!-- Resume & Profile -->
-            <article class="project-card">
-                <div>
-                    <div class="project-title">Resume &amp; Profile Overview</div>
-                    <div class="project-meta">File: <code>Resume.html</code></div>
-                    <div class="pill-row">
-                        <span class="pill">Profile</span>
-                        <span class="pill">Experience</span>
-                        <span class="pill">Skills Overview</span>
-                    </div>
-                    <p class="project-desc">
-                        Core resume and professional summary highlighting remote operations, documentation, workflow
-                        design, and data/analytics-related experience. This page provides overall context for the projects
-                        below and can be used as the main portfolio link in job applications.
-                    </p>
-                </div>
-                <div class="project-link">
-                    <a href="Resume.html">Open Resume &amp; Profile</a>
-                </div>
-            </article>
-
-            <!-- Project 1 -->
-            <article class="project-card">
-                <div>
-                    <div class="project-title">Project 1 – Operations Dashboard</div>
-                    <div class="project-meta">File: <code>Operations Dashboard.html</code></div>
-                    <div class="pill-row">
-                        <span class="pill">Operations Analytics</span>
-                        <span class="pill">SQL</span>
-                        <span class="pill">Dashboards</span>
-                    </div>
-                    <p class="project-desc">
-                        Analytics project based on a small-business operations scenario (fabrication jobs, revenue, costs,
-                        status and timing). Demonstrates use of structured datasets and SQL-style thinking to track job
-                        volume, revenue vs. cost, and on-time completion, then present results as clear operational KPIs.
-                    </p>
-                </div>
-                <div class="project-link">
-                    <a href="Operations Dashboard.html">Open Operations Dashboard Project</a>
-                </div>
-            </article>
-
-            <!-- Project 2 -->
-            <article class="project-card">
-                <div>
-                    <div class="project-title">Project 2 – Call Center &amp; Customer Support KPI Analysis</div>
-                    <div class="project-meta">File: <code>Call Center + Customer Support KPI Analysis.html</code></div>
-                    <div class="pill-row">
-                        <span class="pill">Call Center Analytics</span>
-                        <span class="pill">Customer Support</span>
-                        <span class="pill">Trends &amp; Anomalies</span>
-                    </div>
-                    <p class="project-desc">
-                        Synthetic call center dataset and KPI analysis focused on metrics such as call volume, handle time,
-                        wait time, resolution rate, and customer satisfaction. Highlights the ability to identify trends,
-                        patterns, and anomalies and translate them into actionable insights for operations and support teams.
-                    </p>
-                </div>
-                <div class="project-link">
-                    <a href="Call Center + Customer Support KPI Analysis.html">Open Call Center KPI Project</a>
-                </div>
-            </article>
-
-            <!-- Project 3 -->
-            <article class="project-card">
-                <div>
-                    <div class="project-title">Project 3 – Large Dataset &amp; Pivot Table Deep Dive</div>
-                    <div class="project-meta">File: <code>Large Dataset + Pivot Table Deep Dive.html</code></div>
-                    <div class="pill-row">
-                        <span class="pill">Excel / Google Sheets</span>
-                        <span class="pill">Power Query</span>
-                        <span class="pill">Pivot Tables</span>
-                    </div>
-                    <p class="project-desc">
-                        Demonstrates working with a larger dataset using Excel (and Power Query where applicable) to clean
-                        data, build interactive pivot tables, and explore trends by time period and category. Emphasizes
-                        handling many rows efficiently and summarizing the most important patterns.
-                    </p>
-                </div>
-                <div class="project-link">
-                    <a href="Large Dataset + Pivot Table Deep Dive.html">Open Large Dataset / Pivot Project</a>
-                </div>
-            </article>
-
-            <!-- Project 4 -->
-            <article class="project-card">
-                <div>
-                    <div class="project-title">Project 4 – Communication-Focused Report</div>
-                    <div class="project-meta">File: <code>Communication-Focused Report.html</code></div>
-                    <div class="pill-row">
-                        <span class="pill">Business Reporting</span>
-                        <span class="pill">Storytelling with Data</span>
-                        <span class="pill">Non-Technical Stakeholders</span>
-                    </div>
-                    <p class="project-desc">
-                        A report that packages one of the analysis projects into a format suitable for business stakeholders:
-                        narrative explanation of the problem, key charts and visuals, and clear recommendations. Designed to
-                        show strong written communication and the ability to translate technical analysis into business
-                        impact.
-                    </p>
-                </div>
-                <div class="project-link">
-                    <a href="Communication-Focused Report.html">Open Communication-Focused Report</a>
-                </div>
-            </article>
-        </div>
-    </section>
-</main>
-
-<footer>
-    &copy; <span id="year"></span> Michael Kruse · Data &amp; Reporting · Operations &amp; Customer Support Analytics
-    <script>
-        document.getElementById('year').textContent = new Date().getFullYear();
-    </script>
-</footer>
+</div>
 </body>
 </html>
