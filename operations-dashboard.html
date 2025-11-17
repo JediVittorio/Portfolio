@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Project 1 – Operations Dashboard</title>
+    <style>
+        :root {
+            --bg: #050816;
+            --bg-soft: #0f172a;
+            --card: #020617;
+            --accent: #38bdf8;
+            --accent-soft: rgba(56, 189, 248, 0.15);
+            --text-main: #e5e7eb;
+            --text-muted: #9ca3af;
+            --border-subtle: #1f2937;
+            --shadow-soft: 0 24px 60px rgba(15, 23, 42, 0.9);
+            --radius-lg: 18px;
+            --radius-pill: 999px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+                sans-serif;
+            background: radial-gradient(circle at top, #0b1120, #020617 55%, #000 100%);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            padding: 32px 16px;
+        }
+
+        .page {
+            width: 100%;
+            max-width: 1100px;
+            background: radial-gradient(circle at top left, #020617, #020617 40%, #020617 100%);
+            border-radius: 28px;
+            border: 1px solid rgba(148, 163, 184, 0.22);
+            box-shadow: var(--shadow-soft);
+            padding: 28px 24px 32px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @media (min-width: 900px) {
+            .page {
+                padding: 32px 40px 40px;
+            }
+        }
+
+        .page::before {
+            content: "";
+            position: absolute;
+            inset: -40%;
+            background:
+                radial-gradient(circle at 10% 0, rgba(56, 189, 248, 0.14), transparent 55%),
+                radial-gradient(circle at 90% 0, rgba(129, 140, 248, 0.09), transparent 55%);
+            opacity: 0.9;
+            pointer-events: none;
+        }
+
+        .page-inner {
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 28px;
+        }
+
+        @media (min-width: 720px) {
+            header {
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+            }
+        }
+
+        .title-block h1 {
+            font-size: clamp(1.6rem, 2.2vw + 1.1rem, 2.4rem);
+            margin: 0 0 4px;
+            letter-spacing: 0.03em;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            gap: 8px;
+        }
+
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px 4px 4px;
+            border-radius: var(--radius-pill);
+            background: linear-gradient(90deg, rgba(15, 23, 42, 0.95), rgba(8, 47, 73, 0.9));
+            border: 1px solid rgba(56, 189, 248, 0.5);
+            color: var(--accent);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+        }
+
+        .pill-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+            background: radial-gradient(circle at 30% 0, #e0f2fe, #38bdf8);
+            box-shadow: 0 0 10px rgba(56, 189, 248, 0.9);
+        }
+
+        .subtitle {
+            margin: 0;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            max-width: 520px;
+        }
+
+        .meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .meta span {
+            padding: 4px 10px;
+            border-radius: var(--radius-pill);
+            border: 1px solid rgba(148, 163, 184, 0.45);
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.25));
+        }
+
+        main {
+            display: grid;
+            grid-template-columns: minmax(0, 2fr);
+            gap: 18px;
+        }
+
+        @media (min-width: 900px) {
+            main {
+                grid-template-columns: minmax(0, 1.3fr) minmax(0, 1.1fr);
+                gap: 22px;
+                align-items: flex-start;
+            }
+        }
+
+        section {
+            background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.98));
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(30, 64, 175, 0.6);
+            box-shadow: 0 18px 45px rgba(15, 23, 42, 0.8);
+            padding: 18px 18px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        section::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(135deg, rgba(56, 189, 248, 0.06), transparent 40%),
+                linear-gradient(-135deg, rgba(79, 70, 229, 0.06), transparent 40%);
+            opacity: 1;
+            pointer-events: none;
+        }
+
+        section > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        section h2 {
+            margin: 0 0 10px;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-tag {
+            width: 22px;
+            height: 1px;
+            background: linear-gradient(90deg, rgba(56, 189, 248, 0.9), transparent);
+        }
+
+        section h3 {
+            margin: 0 0 6px;
+            font-size: 1.05rem;
+        }
+
+        section p {
+            margin: 0 0 8px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 8px;
+        }
+
+        .chip {
+            padding: 4px 10px;
+            border-radius: var(--radius-pill);
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(148, 163, 184, 0.5);
+            font-size: 0.75rem;
+            color: var(--text-main);
+        }
+
+        ul {
+            margin: 6px 0 0;
+            padding-left: 18px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        li + li {
+            margin-top: 3px;
+        }
+
+        .two-col {
+            display: grid;
+            grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.1fr);
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        @media (max-width: 640px) {
+            .two-col {
+                grid-template-columns: minmax(0, 1fr);
+            }
+        }
+
+        .subcard {
+            border-radius: 14px;
+            border: 1px solid rgba(30, 64, 175, 0.7);
+            background: radial-gradient(circle at top left, #020617, #020617 50%);
+            padding: 10px 11px 11px;
+        }
+
+        .subcard h4 {
+            margin: 0 0 4px;
+            font-size: 0.86rem;
+            color: #e5e7eb;
+        }
+
+        .table {
+            width: 100%;
+            border-radius: 10px;
+            border: 1px solid var(--border-subtle);
+            background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.98));
+            overflow: hidden;
+            margin-top: 8px;
+        }
+
+        .table-header,
+        .table-row {
+            display: grid;
+            grid-template-columns: 0.9fr 1.8fr;
+            font-size: 0.8rem;
+        }
+
+        .table-header {
+            background: rgba(15, 23, 42, 0.9);
+            color: var(--text-main);
+            font-weight: 500;
+        }
+
+        .table-header div,
+        .table-row div {
+            padding: 6px 9px;
+            border-bottom: 1px solid rgba(15, 23, 42, 0.8);
+        }
+
+        .table-row:last-child div {
+            border-bottom: none;
+        }
+
+        .table-row:nth-child(even) {
+            background: rgba(15, 23, 42, 0.7);
+        }
+
+        code {
+            font-family: ui-monospace, Menlo, Monaco, "SF Mono", Consolas, monospace;
+            font-size: 0.78rem;
+            background: rgba(15, 23, 42, 0.9);
+            padding: 2px 6px;
+            border-radius: 999px;
+            border: 1px solid rgba(148, 163, 184, 0.5);
+            color: #e5e7eb;
+        }
+
+        pre {
+            margin: 8px 0 0;
+            padding: 10px 11px;
+            border-radius: 12px;
+            background: #020617;
+            border: 1px solid rgba(30, 64, 175, 0.8);
+            overflow-x: auto;
+            font-size: 0.78rem;
+        }
+
+        pre code {
+            background: none;
+            border-radius: 0;
+            border: none;
+            padding: 0;
+        }
+
+        .viz-list {
+            list-style: none;
+            padding-left: 0;
+            margin: 6px 0 0;
+        }
+
+        .viz-list li {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .viz-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 999px;
+            background: var(--accent);
+            box-shadow: 0 0 8px rgba(56, 189, 248, 0.8);
+            margin-top: 4px;
+        }
+
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 640px) {
+            .metrics {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        .metric {
+            padding: 9px 10px;
+            border-radius: 12px;
+            border: 1px solid rgba(148, 163, 184, 0.6);
+            background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.98), rgba(15, 23, 42, 0.94));
+            font-size: 0.8rem;
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            margin-bottom: 2px;
+        }
+
+        .metric-value {
+            font-size: 0.95rem;
+            color: var(--accent);
+        }
+
+        .footer-note {
+            margin-top: 16px;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <div class="page-inner">
+            <header>
+                <div class="title-block">
+                    <div class="pill">
+                        <span class="pill-dot"></span>
+                        <span>Project 1</span>
+                    </div>
+                    <h1>
+                        Operations Dashboard
+                        <span style="font-weight:400; color:#9ca3af;">(based on A‑Ran Stainless)</span>
+                    </h1>
+                    <p class="subtitle">
+                        Built an end‑to‑end operations analytics project: structured production data, wrote
+                        SQL for performance metrics, and designed an interactive dashboard to track volume,
+                        profitability, and on‑time delivery.
+                    </p>
+                </div>
+                <div class="meta">
+                    <span>Role: Operations & Data Analysis</span>
+                    <span>Stack: Excel / SQLite / Power BI</span>
+                    <span>Focus: Throughput, Margin, On‑Time Rate</span>
+                </div>
+            </header>
+
+            <main>
+                <section>
+                    <h2>
+                        <span class="section-tag"></span>
+                        Project Overview
+                    </h2>
+                    <h3>Goal</h3>
+                    <p>
+                        Demonstrate the ability to turn raw shop‑floor style job data into
+                        actionable insights for operations leadership: which jobs are most profitable,
+                        where hours and material spend go, and how reliably work is completed on time.
+                    </p>
+                    <ul>
+                        <li>Modeled production jobs in a structured dataset suitable for analysis.</li>
+                        <li>Wrote SQL to filter, aggregate, and summarize operational performance.</li>
+                        <li>Designed a dashboard showing jobs per month, revenue vs. cost, and on‑time rate.</li>
+                    </ul>
+                    <div class="chips">
+                        <div class="chip">Operations Analytics</div>
+                        <div class="chip">Job Costing</div>
+                        <div class="chip">SQL Reporting</div>
+                        <div class="chip">Executive Dashboarding</div>
+                    </div>
+
+                    <div class="two-col">
+                        <div class="subcard">
+                            <h4>Dataset (Excel / Google Sheets)</h4>
+                            <p>
+                                Core table representing each production job, designed so it can be
+                                imported directly into SQLite, Power BI, or another BI tool.
+                            </p>
+                            <div class="table">
+                                <div class="table-header">
+                                    <div>Column</div>
+                                    <div>Description</div>
+                                </div>
+                                <div class="table-row">
+                                    <div>Job_ID</div>
+                                    <div>Unique identifier for each job.</div>
+                                </div>
+                                <div class="table-row">
+                                    <div>Customer_Type</div>
+                                    <div>Segment such as OEM, Distributor, or End‑User.</div>
+                                </div>
+                                <div class="table-row">
+                                    <div>Job_Type</div>
+                                    <div>Type of work (e.g., Fabrication, Polishing, Repair).</div>
+                                </div>
+                                <div class="table-row">
+                                    <div>Start_Date</div>
+                                    <div>Date work started on the job.</div>
+                                </div>
+                                <div class="table-row">
+                                    <div>End_Date</div>
+                                    <div>Date the job was completed (or blank if open).</div>
+                                </div>
+                                <div class="table-row">
+                                    <div>Hours_Worked</div>
+                                    <div>Total direct labor hours incurred.</div>
+                                </div>
+                                <div class="table-row">
+                                    <div>Material_Cost</div>
+                                    <div>Material dollars consumed on the job.</div>
+                                </div>
+                                <div class="table-row">
+                                    <div>Labor_Cost</div>
+                                    <div>Labor dollars based on standard hourly rates.</div>
+                                </div>
+                                <div class="table-row">
+                                    <div>Revenue</div>
+                                    <div>Billed revenue for the job.</div>
+                                </div>
+                                <div class="table-row">
+                                    <div>Status</div>
+                                    <div>
+                                        Pipeline state (e.g., Quoted, Scheduled, In‑Progress, Completed),
+                                        used to filter active vs. finished work.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="subcard">
+                            <h4>Key Questions Answered</h4>
+                            <ul>
+                                <li>How many jobs are completed each month?</li>
+                                <li>Which job types and customer segments drive the most revenue?</li>
+                                <li>Where are margins strongest or weakest by job type?</li>
+                                <li>What is the on‑time completion rate over time?</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>
+                        <span class="section-tag"></span>
+                        SQL & Analytics
+                    </h2>
+                    <h3>Example Queries (SQLite‑style SQL)</h3>
+                    <p>
+                        The Excel/Sheets dataset is loaded into a lightweight SQLite database,
+                        enabling flexible filtering and aggregation before feeding a BI tool.
+                    </p>
+
+                    <div class="subcard">
+                        <h4>Filter by Date, Job Type, and Status</h4>
+                        <p>
+                            Pull just the jobs relevant for a production review within a specific
+                            time window and operational focus.
+                        </p>
+                        <pre><code>-- Completed fabrication jobs in Q1 2025
+SELECT
+    Job_ID,
+    Customer_Type,
+    Job_Type,
+    Start_Date,
+    End_Date,
+    Hours_Worked,
+    Material_Cost,
+    Labor_Cost,
+    Revenue
+FROM jobs
+WHERE
+    date(Start_Date) &gt;= '2025-01-01'
+    AND date(End_Date)   &lt; '2025-04-01'
+    AND Job_Type         = 'Fabrication'
+    AND Status           = 'Completed';
+</code></pre>
+                    </div>
+
+                    <div class="subcard">
+                        <h4>Aggregate by Month, Job Type, and Customer Type</h4>
+                        <p>
+                            Roll up volumes and dollars to see mix and profitability trends.
+                        </p>
+                        <pre><code>-- Monthly revenue and jobs by job type
+SELECT
+    strftime('%Y-%m', End_Date) AS Month,
+    Job_Type,
+    COUNT(*)                    AS Jobs_Completed,
+    SUM(Revenue)                AS Total_Revenue,
+    SUM(Material_Cost + Labor_Cost) AS Total_Cost,
+    SUM(Revenue) - SUM(Material_Cost + Labor_Cost) AS Gross_Margin
+FROM jobs
+WHERE Status = 'Completed'
+GROUP BY Month, Job_Type
+ORDER BY Month, Job_Type;</code></pre>
+                    </div>
+
+                    <div class="subcard">
+                        <h4>CTE: Monthly Revenue & Jobs Completed</h4>
+                        <p>
+                            A reusable summary table that can be joined to other dimensions or
+                            referenced directly by BI visuals.
+                        </p>
+                        <pre><code>WITH monthly_summary AS (
+    SELECT
+        strftime('%Y-%m', End_Date) AS Month,
+        COUNT(*)                    AS Jobs_Completed,
+        SUM(Revenue)                AS Revenue,
+        SUM(Material_Cost + Labor_Cost) AS Cost,
+        SUM(Revenue) - SUM(Material_Cost + Labor_Cost) AS Margin
+    FROM jobs
+    WHERE Status = 'Completed'
+    GROUP BY strftime('%Y-%m', End_Date)
+)
+SELECT
+    Month,
+    Jobs_Completed,
+    Revenue,
+    Cost,
+    Margin,
+    ROUND(Margin * 1.0 / NULLIF(Cost, 0) * 100, 1) AS Margin_Percent
+FROM monthly_summary
+ORDER BY Month;</code></pre>
+                    </div>
+
+                    <div class="metrics">
+                        <div class="metric">
+                            <div class="metric-label">Time Grain</div>
+                            <div class="metric-value">Monthly (End_Date)</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-label">Primary Dimensions</div>
+                            <div class="metric-value">Job_Type, Customer_Type</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-label">Core Measures</div>
+                            <div class="metric-value">Jobs, Revenue, Cost, Margin</div>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>
+                        <span class="section-tag"></span>
+                        Dashboard Design
+                    </h2>
+                    <h3>Visualization Tool</h3>
+                    <p>
+                        Dashboard built in <strong>Power BI Desktop</strong> (can also be replicated
+                        in Tableau Public or Looker Studio), with a single page focused on
+                        throughput, profitability, and reliability.
+                    </p>
+
+                    <h3>Key Visuals</h3>
+                    <ul class="viz-list">
+                        <li>
+                            <span class="viz-dot"></span>
+                            <span><strong>Jobs per Month</strong> – column chart using the monthly summary to show completed jobs and seasonality in workload.</span>
+                        </li>
+                        <li>
+                            <span class="viz-dot"></span>
+                            <span><strong>Revenue vs. Cost per Month</strong> – clustered columns or combo chart showing revenue, total cost, and gross margin trend.</span>
+                        </li>
+                        <li>
+                            <span class="viz-dot"></span>
+                            <span><strong>On‑Time Completion Rate</strong> – card or line chart showing the % of completed jobs that met their promised due date.</span>
+                        </li>
+                        <li>
+                            <span class="viz-dot"></span>
+                            <span><strong>Job Mix by Type / Customer Segment</strong> – stacked bars or donut charts to compare volume and revenue mix.</span>
+                        </li>
+                    </ul>
+
+                    <h3>Interactivity</h3>
+                    <ul>
+                        <li>Slice by date range, customer type, job type, and status.</li>
+                        <li>Highlight specific job types to see their impact on revenue and margin.</li>
+                        <li>Drill from monthly summaries down to individual jobs when needed.</li>
+                    </ul>
+
+                    <div class="footer-note">
+                        This project can be extended with additional metrics (WIP, quote‑to‑win rate,
+                        or machine utilization) by adding columns to the source dataset and exposing
+                        them through new SQL views and dashboard visuals.
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+</body>
+</html>
+
